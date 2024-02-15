@@ -1,32 +1,20 @@
 const express = require('express');
-const router = express.Router();
+const payment_route = express();
 
-// GET endpoint
-router.get('/api/data', (req, res) => {
-  // Assuming some data to send back
-  const data = {
-    message: 'GET request successful!',
-    timestamp: new Date()
-  };
-  res.json(data);
-});
+const bodyParser = require('body-parser');
+payment_route.use(bodyParser.json());
+payment_route.use(bodyParser.urlencoded({ extended:false }));
 
-// POST endpoint
-router.post('/api/data', (req, res) => {
-  // Assuming some data is received in the request body
-  const receivedData = req.body;
-  console.log('Received data:', receivedData);
+const path = require('path');
 
-  // Assuming some processing is done with the received data
-  // For example, saving it to a database
+payment_route.set('view engine','ejs');
+payment_route.set('views',path.join(__dirname, '../views'));
 
-  // Sending back a response
-  const response = {
-    message: 'POST request successful!',
-    receivedData: receivedData,
-    timestamp: new Date()
-  };
-  res.json(response);
-});
+const paymentController = require('../Controllers/paymentController');
 
-module.exports = router;
+payment_route.get('/', paymentController.renderBuyPage);
+payment_route.post('/payment', paymentController.payment);
+payment_route.get('/success', paymentController.success);
+payment_route.get('/failure', paymentController.failure);
+
+module.exports = payment_route;
