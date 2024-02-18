@@ -1,20 +1,18 @@
-const express = require('express');
-const payment_route = express();
+import express  from 'express'
+const apiRoute = express.Router();
 
-const bodyParser = require('body-parser');
-payment_route.use(bodyParser.json());
-payment_route.use(bodyParser.urlencoded({ extended:false }));
+import bodyParser from 'body-parser'
+apiRoute.use(bodyParser.json());
+apiRoute.use(bodyParser.urlencoded({ extended:false }));
 
-const path = require('path');
 
-payment_route.set('view engine','ejs');
-payment_route.set('views',path.join(__dirname, '../views'));
 
-const paymentController = require('../Controllers/paymentController');
 
-payment_route.get('/', paymentController.renderBuyPage);
-payment_route.post('/payment', paymentController.payment);
-payment_route.get('/success', paymentController.success);
-payment_route.get('/failure', paymentController.failure);
+import {payment,success,failure} from '../Controller/PaymentController.js';
 
-module.exports = payment_route;
+
+apiRoute.post('/payment', payment);
+apiRoute.get('/success', success);
+apiRoute.get('/failure', failure);
+
+export {apiRoute};

@@ -1,11 +1,12 @@
 import express from 'express'
 import cors from 'cors'
 import  {emailsender} from './Utility/MailSend.js'
+import {apiRoute} from './Router/PaymentRoutes.js'
 const app = express();
 app.use(express.json());
 // Enable CORS for all routes
 app.use(cors());
-
+app.use('/api',apiRoute)
 // Define your routes
 app.get('/', (req, res) => {
   res.send('Hello, world!');
@@ -21,7 +22,7 @@ app.post('/sendmail', async (req, res) => {
   }
 });
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

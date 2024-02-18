@@ -1,7 +1,7 @@
 //https://myaccount.google.com/lesssecureapps   past tihs link in url and allow less secure apps ...for locolhost if you run app https no need to allow this link
 import nodemailer from 'nodemailer'
 
-export const emailsender = async (email, msg) => {
+export const emailsender = async (email, msg,subject="Shopify Songs Promotion") => {
     console.log("email");
     try {
         let mailTransporter = nodemailer.createTransport({
@@ -20,7 +20,7 @@ export const emailsender = async (email, msg) => {
         let mailDetails = {
             from: "dilip.wannigamage@gmail.com",
             to: email,
-            subject: "SoundCloud",
+            subject: subject,
             text: msg,
         }
         return await mailTransporter.sendMail(mailDetails)

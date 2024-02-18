@@ -1,44 +1,50 @@
 
-const { STRIPE_PUBLISHABLE_KEY, STRIPE_SECRET_KEY } = process.env;
+const STRIPE_PUBLISHABLE_KEY="pk_test_51OiAn0H4tDig07HMkiKshs29sCYHhqImupGA4fROYbfgJFSWBZIYwbRhcqKBezTXEVr3AFvgdGDCeZw42HhZ5YhO00ukAr3Ogb"
+const  STRIPE_SECRET_KEY  = "sk_test_51OiAn0H4tDig07HMZRNjoOjIssqnO8V77thQHgGDS2dT5K6XloSl7yi8udm96vE4CwukoBXytbQq9k8hWNpvBnTx00hcbqI7aV"
 
-import stripe from ('stripe')(STRIPE_SECRET_KEY)
-
-
+import stripePackage from 'stripe';
+const stripe = stripePackage(STRIPE_SECRET_KEY);
+import {emailsender} from '../Utility/MailSend.js'
+ import {TeamMessage} from '../Utility/TeamMessage.js'
+ import {ClientMessage} from '../Utility/ClientMessage.js'
 const payment = async(req,res)=>{
+  //   console.log(req.body)
 
+//  res.send(req.body)
+
+ const lineItems=req.body.order_detail.map(item=>{
+    return{
+        price_data:{
+            currency:"usd",
+            product_data:{
+                name:req.body.song_name+"  --> "+item.order_name+" : "+item.order_package,
+                // images:[item.imgdata],
+                description:req.body.song_url,
+            },
+            unit_amount:Math.max(item.price * 100, 50),
+        },
+        quantity:1
+    }
+ })
     try {
-
-    stripe.customers.create({
-        email: req.body.stripeEmail,
-        source: STRIPE_PUBLISHABLE_KEY,
-        name: 'Sandeep Sharma',
-        address: {
-            line1: '115, Vikas Nagar',
-            postal_code: '281001',
-            city: 'Mathura',
-            state: 'Uttar Pradesh',
-            country: 'India',
-        }
-    })
-    .then((customer) => {
- 
-        return stripe.charges.create({
-            amount: req.body.amount,     // amount will be amount*100
-            description: req.body.productName,
-            currency: 'USD',
-            customer: customer.id
+      //  console.log(STRIPE_SECRET_KEY)
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types:["card"],
+            line_items:lineItems,
+            mode:"payment",
+            success_url:"http://localhost:3000/sucess",
+            cancel_url:"http://localhost:3000/cancel",
         });
-    })
-    .then((charge) => {
-        res.redirect("/success")
-    })
-    .catch((err) => {
-        res.redirect("/failure")
-    });
+    
+
+      //  let messge=ClientMessage(req.body.song_name,req.body.total_price,req.body.order_detail)
+      //  emailsender(req.body.client_email,messge,"Order Confirmation: Spotify Promotion")
+
+        res.json({id:session.id})
 
 
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 
 }
@@ -47,7 +53,7 @@ const success = async(req,res)=>{
 
     try {
         
-        res.render('success');
+        res.send('success');
 
     } catch (error) {
         console.log(error.message);
@@ -59,7 +65,7 @@ const failure = async(req,res)=>{
 
     try {
         
-        res.render('failure');
+        res.send('failure');
 
     } catch (error) {
         console.log(error.message);
