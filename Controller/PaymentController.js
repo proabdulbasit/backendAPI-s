@@ -7,8 +7,9 @@ const stripe = stripePackage(STRIPE_SECRET_KEY);
 import {emailsender} from '../Utility/MailSend.js'
  import {TeamMessage} from '../Utility/TeamMessage.js'
  import {ClientMessage} from '../Utility/ClientMessage.js'
+ import { createUser } from './User.js';
 const payment = async(req,res)=>{
-  //   console.log(req.body)
+     console.log(req.body)
 
 //  res.send(req.body)
 
@@ -19,7 +20,7 @@ const payment = async(req,res)=>{
             product_data:{
                 name:req.body.song_name+"  --> "+item.order_name+" : "+item.order_package,
                 // images:[item.imgdata],
-                description:req.body.song_url,
+                description:req.body.song_url||"song url",
             },
             unit_amount:Math.max(item.price * 100, 50),
         },
@@ -36,7 +37,7 @@ const payment = async(req,res)=>{
             cancel_url:"http://localhost:3000/cancel",
         });
     
-
+await createUser(req.body)
       //  let messge=ClientMessage(req.body.song_name,req.body.total_price,req.body.order_detail)
       //  emailsender(req.body.client_email,messge,"Order Confirmation: Spotify Promotion")
 

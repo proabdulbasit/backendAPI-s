@@ -1,8 +1,9 @@
 export const ClientMessage=(song_name,total_price,url,promotion)=>{
 
-    let promotionList=promotion?.map(item=>{
-     `<li>${item.order_name} : ${item.order_quentity}</li>`
-    })
+let promotionList = '';
+if (promotion.length > 0) {
+    promotionList = promotion.map(item => `<li>${item.order_name} : ${item.order_package}</li>`).join('');
+}
 
 
 

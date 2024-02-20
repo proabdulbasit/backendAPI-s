@@ -21,7 +21,7 @@ export const emailsender = async (email, msg,subject="Shopify Songs Promotion") 
             from: "dilip.wannigamage@gmail.com",
             to: email,
             subject: subject,
-            text: msg,
+            html: msg,
         }
         return await mailTransporter.sendMail(mailDetails)
     } catch (error) {

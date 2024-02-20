@@ -4,6 +4,8 @@ import  {emailsender} from './Utility/MailSend.js'
 import {apiRoute} from './Router/PaymentRoutes.js'
 import {TeamMessage} from './Utility/TeamMessage.js'
 import {ClientMessage} from './Utility/ClientMessage.js'
+import {connection} from "./Models/db.js"
+import { getUser,deleteUser } from './Controller/User.js'
 const app = express();
 app.use(express.json());
 // Enable CORS for all routes
@@ -16,9 +18,19 @@ app.get('/', (req, res) => {
 
 app.post('/sendmail', async (req, res) => {
  try {
-  console.log(req.body)
+  //console.log(req.body)
   const { email, msg } = req.body;
-  const message1=ClientMessage()
+ let userData=await getUser(email)
+ //console.log("userData ",userData)
+ if(userData)
+ {
+
+   const message1=ClientMessage(userData.email,123,'url',userData.UserData.order_detail)
+   await emailsender(userData.email,message1)
+   deleteUser(email)
+
+ }
+
   res.send(req.body)
   //const result = await emailsender(email, msg);
   // if (result) {
@@ -32,6 +44,7 @@ app.post('/sendmail', async (req, res) => {
 });
 // Start the server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+app.listen(PORT,async () => {
+  await connection()
   console.log(`Server is running on port ${PORT}`);
 });
