@@ -1,11 +1,14 @@
-export const ClientMessage=(song_name,total_price,url,promotion)=>{
+export const ClientMessage=(song_name,songs,promotion)=>{
 
 let promotionList = '';
 if (promotion.length > 0) {
-    promotionList = promotion.map(item => `<li>${item.order_name} : ${item.order_package}</li>`).join('');
+    promotionList = promotion.map(item => `<li>${item.order_name} : ${item.order_package} : $${item.price}</li>`).join('');
 }
 
-
+let songsList = '';
+if (songs.length > 0) {
+    songsList = songs.map(item => `<li><a href="${item.url}">${item.name}</a></li>`).join('');
+}
 
 return  `<html lang="en">
 <head>
@@ -52,10 +55,10 @@ return  `<html lang="en">
   <div class="details">
       <p>Dear Customer,</p>
       <p>Thank you for choosing our Spotify promotion service. Your order details are as follows:</p>
-      <p><strong>Album Name:</strong> ${song_name}</p>
-      <p><strong>Package:</strong> ${total_price}</p>
-      <p><strong>URL:</strong> ${url}</p>
-
+      <p><strong>Songs Name:</strong></p>
+      <ul>
+         ${songsList}
+        </ul>   
       <p>The order includes promotion for:</p>
       <ul>
          ${promotionList}

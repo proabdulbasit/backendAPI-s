@@ -25,8 +25,10 @@ app.post('/sendmail', async (req, res) => {
  if(userData)
  {
 
-   const message1=ClientMessage(userData.email,123,'url',userData.UserData.order_detail)
+   const message1=ClientMessage(userData.email,userData.UserData.song_details,userData.UserData.order_detail)
    await emailsender(userData.email,message1)
+    const message2=TeamMessage(userData.email,userData.UserData.song_details,userData.UserData.order_detail)
+    await emailsender("dilip.wannigamage@gmail.com",message2,"Customer Order Details - Spotify Promotion")
    deleteUser(email)
 
  }
@@ -40,6 +42,8 @@ app.post('/sendmail', async (req, res) => {
   // }
  } catch (error) {
   console.log(error)
+  res.status(500).json({ message: 'Failed to send email.' });
+
  }
 });
 // Start the server

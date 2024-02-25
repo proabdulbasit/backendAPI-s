@@ -10,5 +10,6 @@ export const getUser = async (data) => {
 };
 
 export const deleteUser = async (data) => {
+  console.log("user delete")
   return await User.deleteOne({ email: data });
 };
