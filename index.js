@@ -46,6 +46,24 @@ app.post('/sendmail', async (req, res) => {
 
  }
 });
+
+app.post('/contact', async (req, res) => {
+  try {
+   //console.log(req.body)
+   const { email, msg } = req.body;
+   const result = await emailsender(email, msg, "Contact Form Submission");
+   if (result) {
+     res.json({ message: 'Email sent successfully!' });
+   } else {
+     res.status(500).json({ message: 'Failed to send email.' });
+   }
+  } catch (error) {
+   console.log(error)
+   res.status(500).json({ message: 'Failed to send email.' });
+ 
+  }
+ })
+
 // Start the server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT,async () => {
