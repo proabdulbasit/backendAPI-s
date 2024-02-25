@@ -4,6 +4,7 @@ import  {emailsender} from './Utility/MailSend.js'
 import {apiRoute} from './Router/PaymentRoutes.js'
 import {TeamMessage} from './Utility/TeamMessage.js'
 import {ClientMessage} from './Utility/ClientMessage.js'
+import { FreePromoMessage } from './Utility/FreePromoMessage.js'
 import {connection} from "./Models/db.js"
 import { getUser,deleteUser } from './Controller/User.js'
 const app = express();
@@ -64,6 +65,24 @@ app.post('/contact', async (req, res) => {
   }
  })
 
+
+app.post('/freepromotion', async (req, res) => {
+  try {
+   console.log(req.body)
+   const { email, name, howDidYouFindUs,spotifyTrackLink,amountOfPlays} = req.body;
+   const message=FreePromoMessage(email, name, howDidYouFindUs,spotifyTrackLink,amountOfPlays)
+   const result = await emailsender(email, message, "Free Promotion");
+   if (result) {
+     res.json({ message: 'Email sent successfully!' });
+   } else {
+     res.status(500).json({ message: 'Failed to send email.' });
+   }
+  } catch (error) {
+   console.log(error)
+   res.status(500).json({ message: 'Failed to send email.' });
+ 
+  }
+ })
 // Start the server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT,async () => {
