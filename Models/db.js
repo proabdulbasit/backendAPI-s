@@ -1,7 +1,8 @@
 import mongoose from "mongoose"
 //mongoose.Promise = global.Promise ;
-const db=`mongodb+srv://abobakar:abobakar786@fyp.ktjybxr.mongodb.net/testings`;
-const db1=`mongodb://localhost:27017/FYP_database`;
+
+const db=`mongodb+srv://dilipwannigamage:btFVeAwj0ImW4LkC@spotiviraldb.rkamkht.mongodb.net/?retryWrites=true&w=majority`
+
 export const connection=async()=>{ return await mongoose.connect(db).then(() => {
       console.log('Connected to MongoDB');
     })

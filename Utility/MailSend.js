@@ -11,14 +11,14 @@ export const emailsender = async (email, msg,subject="SpotiViral Songs Promotion
             secure: false,
             requireTLS: true,
             auth: {
-                user: "dilip.wannigamage@gmail.com",
-                pass: "amff parr xnzd pshi"
+                user: "spotiviral@gmail.com",
+                pass: "cmyv mlnb xrtf xzhc"
             }
     
         });
         
         let mailDetails = {
-            from: "dilip.wannigamage@gmail.com",
+            from: "spotiviral@gmail.com",
             to: email,
             subject: subject,
             html: msg,
