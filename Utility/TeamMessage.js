@@ -2,7 +2,7 @@ export const TeamMessage=(customerEmail,songs,promotion)=>{
  let date=new Date()
     let promotionList = '';
     if (promotion.length > 0) {
-        promotionList = promotion.map(item => `<li>${item.order_name} : ${item.order_package} : $${item.price}</li>`).join('');
+        promotionList = promotion.map(item => `<li>${item.order_name} : ${item.order_package} : $${item.price} ${item.order_name=="play"?songs.length+"x":"1x"}</li>`).join('');
     }
     
     let songsList = '';

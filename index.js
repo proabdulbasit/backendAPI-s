@@ -52,7 +52,7 @@ app.post('/contact', async (req, res) => {
   try {
    //console.log(req.body)
    const { email, msg } = req.body;
-   const result = await emailsender(email, msg, "Contact Form Submission");
+   const result = await emailsender("dilip.wannigamage@gmail.com", msg, "Contact Form Submission");
    if (result) {
      res.json({ message: 'Email sent successfully!' });
    } else {
@@ -71,7 +71,7 @@ app.post('/freepromotion', async (req, res) => {
    console.log(req.body)
    const { email, name, howDidYouFindUs,spotifyTrackLink,amountOfPlays} = req.body;
    const message=FreePromoMessage(email, name, howDidYouFindUs,spotifyTrackLink,amountOfPlays)
-   const result = await emailsender(email, message, "Free Promotion");
+   const result = await emailsender("dilip.wannigamage@gmail.com", message, "Free Promotion");
    if (result) {
      res.json({ message: 'Email sent successfully!' });
    } else {
