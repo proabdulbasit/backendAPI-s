@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 app.post('/sendmail', async (req, res) => {
  try {
   //console.log(req.body)
-  const { email, msg } = req.body;
- let userData=await getUser(email)
+  const {strip_id,email } = req.body;
+ let userData=await getUser(strip_id)
  //console.log("userData ",userData)
  if(userData)
  {
@@ -30,7 +30,7 @@ app.post('/sendmail', async (req, res) => {
    await emailsender(userData.email,message1)
     const message2=TeamMessage(userData.email,userData.UserData.song_details,userData.UserData.order_detail)
     await emailsender("spotiviral@gmail.com",message2,"Customer Order Details - Spotify Promotion")
-   deleteUser(email)
+   deleteUser(strip_id)
 
  }
 
@@ -54,9 +54,9 @@ app.post('/contact', async (req, res) => {
    const { email, msg } = req.body;
    const result = await emailsender("spotiviral@gmail.com", msg, "Contact Form Submission");
    if (result) {
-     res.json({ message: 'Email sent successfully!' });
+     res.json({ message: 'Email sent successfully!' ,success:true});
    } else {
-     res.status(500).json({ message: 'Failed to send email.' });
+     res.status(500).json({ message: 'Failed to send email.' ,success:false});
    }
   } catch (error) {
    console.log(error)

@@ -36,11 +36,10 @@ const payment = async(req,res)=>{
             success_url:"http://localhost:3000/sucess",
             cancel_url:"http://localhost:3000/cancel",
         });
-    
+    req.body.strip_id=session.id
 await createUser(req.body)
       //  let messge=ClientMessage(req.body.song_name,req.body.total_price,req.body.order_detail)
       //  emailsender(req.body.client_email,messge,"Order Confirmation: Spotify Promotion")
-
         res.json({id:session.id})
 
 
