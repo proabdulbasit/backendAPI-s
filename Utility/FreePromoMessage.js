@@ -1,7 +1,7 @@
-export const FreePromoMessage=(email, name, howDidYouFindUs,spotifyTrackLink,amountOfPlays)=>{
- let date=new Date()
-   
-    return  `<html lang="en">
+const FreePromoMessage = (email, name, howDidYouFindUs, spotifyTrackLink, amountOfPlays) => {
+    let date = new Date();
+
+    return `<html lang="en">
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,9 +49,9 @@ export const FreePromoMessage=(email, name, howDidYouFindUs,spotifyTrackLink,amo
           <p>Ordered Date: ${date}</p>
           <p>Customer Name ${name}</p>
           <p>Customer Email ${email}</p>
-            <p>How did you find us: ${howDidYouFindUs}</p>
-            <p>Spotify Track Link: ${spotifyTrackLink}</p>
-           <p>Amount of Plays: ${amountOfPlays}</p>
+          <p>How did you find us: ${howDidYouFindUs}</p>
+          <p>Spotify Track Link: ${spotifyTrackLink}</p>
+          <p>Amount of Plays: ${amountOfPlays}</p>
          
           <p>We're committed to delivering results swiftly. Expect completion within 24 to 48 hours.</p>
           <p>For any questions, don't hesitate to contact us.</p>
@@ -62,7 +62,7 @@ export const FreePromoMessage=(email, name, howDidYouFindUs,spotifyTrackLink,amo
       </div>
     </div>
     </body>
-    </html>`
-    
-    
-    }
+    </html>`;
+};
+
+module.exports = FreePromoMessage;

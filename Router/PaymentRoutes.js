@@ -1,18 +1,13 @@
-import express  from 'express'
+const express = require('express');
+const bodyParser = require('body-parser');
+const { payment, success, failure } = require('../Controller/PaymentController.js');
+
 const apiRoute = express.Router();
-
-import bodyParser from 'body-parser'
 apiRoute.use(bodyParser.json());
-apiRoute.use(bodyParser.urlencoded({ extended:false }));
-
-
-
-
-import {payment,success,failure} from '../Controller/PaymentController.js';
-
+apiRoute.use(bodyParser.urlencoded({ extended: false }));
 
 apiRoute.post('/payment', payment);
 apiRoute.get('/success', success);
 apiRoute.get('/failure', failure);
 
-export {apiRoute};
+module.exports = { apiRoute };

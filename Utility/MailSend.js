@@ -1,7 +1,6 @@
-//https://myaccount.google.com/lesssecureapps   past tihs link in url and allow less secure apps ...for locolhost if you run app https no need to allow this link
-import nodemailer from 'nodemailer'
+const nodemailer = require('nodemailer');
 
-export const emailsender = async (email, msg,subject="SpotiViral Songs Promotion") => {
+const emailsender = async (email, msg, subject = "SpotiViral Songs Promotion") => {
     console.log("email");
     try {
         let mailTransporter = nodemailer.createTransport({
@@ -29,3 +28,5 @@ export const emailsender = async (email, msg,subject="SpotiViral Songs Promotion
         return false
     }
 }
+
+module.exports = { emailsender };

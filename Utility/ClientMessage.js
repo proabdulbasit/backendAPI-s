@@ -1,16 +1,15 @@
-export const ClientMessage=(song_name,songs,promotion)=>{
+const ClientMessage = (song_name, songs, promotion) => {
+    let promotionList = '';
+    if (promotion.length > 0) {
+        promotionList = promotion.map(item => `<li>${item.order_name} : ${item.order_package} : $${item.price} ${item.order_name == "play" ? songs.length + "x" : "1x"}</li>`).join('');
+    }
 
-let promotionList = '';
-if (promotion.length > 0) {
-    promotionList = promotion.map(item => `<li>${item.order_name} : ${item.order_package} : $${item.price} ${item.order_name=="play"?songs.length+"x":"1x"}</li>`).join('');
-}
+    let songsList = '';
+    if (songs.length > 0) {
+        songsList = songs.map(item => `<li><a href="${item.url}">${item.name}</a></li>`).join('');
+    }
 
-let songsList = '';
-if (songs.length > 0) {
-    songsList = songs.map(item => `<li><a href="${item.url}">${item.name}</a></li>`).join('');
-}
-
-return  `<html lang="en">
+    return `<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,6 +72,6 @@ return  `<html lang="en">
 </div>
 </body>
 </html>`
-
-
 }
+
+module.exports = ClientMessage;
