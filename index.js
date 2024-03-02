@@ -76,6 +76,9 @@ app.post('/freepromotion', async (req, res) => {
         res.status(500).json({ message: 'Failed to send email.' });
     }
 });
+app.get('/test', (req, res) => {
+    res.send('Hello World');
+});
 
 // Start the server
 const PORT = process.env.PORT || 4000;
